@@ -14,12 +14,13 @@ class tile:
 # for wind, dragon, flowers, animals (ttype)
 # value is only used to specify flower tiles
 class special_tile:
-    def __init__(self, ttype:str, value=None):
-        if ttype.upper() == "FLOWER":
-            if value == None:
-                print("WARNING: Flower tiles require a value!")
+    def __init__(self, ttype:str, value=None, color=None ):
+        if ttype.upper() == "FLOWER" or ttype.upper() == "ANIMAL" :
+            if value == None or color == None:
+                print("WARNING: Flower tiles require a value or color!")
             else:
                 self.value = value
+                self.color = color
         self.ttype = ttype
 
 # a tile_set object is made up of any number of tiles
@@ -88,26 +89,27 @@ def generate_tiles() -> tile_set:
             all_tiles.add(special_tile(dragon))
             
     # populate with animal tiles
-    for animal in (["cat", "rat", "chicken", "centipede"]):
-            all_tiles.add(special_tile(animal))
+    for color in range(2):
+        for val in range(1, 3):
+            all_tiles.add(special_tile("animal", val, color))
             
     # populate with flower tiles
-    for i in range(2):
+    for color in range(2):
         for val in range(1, 5):
-            all_tiles.add(special_tile("flower", val))
+            all_tiles.add(special_tile("flower", val, color))
 
     return all_tiles
 
 # display a tile set
 def display_tiles(tiles:tile_set):
-    for i in tiles.tile_list:
+    for tile in tiles.tile_list:
         try: # try print as if it was a normal tile
-            print(i.suit, i.value)
+            print(tile.suit, tile.value)
         except:
-            if i.ttype.upper() != "FLOWER":
-                print(i.ttype)
+            if tile.ttype.upper() != "FLOWER" or:
+                print(tile.ttype)
             else:
-                print(i.ttype, i.value)
+                print(tile.ttype, tile.value)
 
 
 
