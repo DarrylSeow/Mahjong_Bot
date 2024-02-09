@@ -17,10 +17,10 @@ class special_tile:
     def __init__(self, ttype:str, value=None, color=None ):
         if ttype.upper() == "FLOWER" or ttype.upper() == "ANIMAL" :
             if value == None or color == None:
-                print("WARNING: Flower tiles require a value or color!")
+                print("WARNING: Flower and animal tiles require a value and color!")
             else:
                 self.value = value
-                self.color = color
+                self.color = color # color is either 0 or 1
         self.ttype = ttype
 
 # a tile_set object is made up of any number of tiles
@@ -41,7 +41,7 @@ class tile_set:
     def multidraw(self, drawcount:int) -> list: # draws drawcount number of cards from the top of the deck
         returnlst = []    
         for i in range(drawcount):
-            returnlst.append(self.draw())
+            returnlst.append(self.topdraw())
         return returnlst
     
     def remove(self, tile_obj): # remove a specific tile from the list of tiles, used when throwing tiles
@@ -106,10 +106,10 @@ def display_tiles(tiles:tile_set):
         try: # try print as if it was a normal tile
             print(tile.suit, tile.value)
         except:
-            if tile.ttype.upper() != "FLOWER" or:
+            if tile.ttype.upper() != "FLOWER" and tile.ttype.upper() != "ANIMAL":
                 print(tile.ttype)
             else:
-                print(tile.ttype, tile.value)
+                print(tile.ttype, tile.value, tile.color)
 
 
 
