@@ -41,7 +41,7 @@ class tile_set:
     def multidraw(self, drawcount:int) -> list: # draws drawcount number of cards from the top of the deck
         returnlst = []    
         for i in range(drawcount):
-            returnlst.append(self.draw())
+            returnlst.append(self.topdraw())
         return returnlst
     
     def remove(self, tile_obj): # remove a specific tile from the list of tiles, used when throwing tiles
@@ -106,7 +106,7 @@ def display_tiles(tiles:tile_set):
         try: # try print as if it was a normal tile
             print(tile.suit, tile.value)
         except:
-            if tile.ttype.upper() != "FLOWER" or:
+            if tile.ttype.upper() != "FLOWER" or tile.ttype.upper() != "ANIMAL":
                 print(tile.ttype)
             else:
                 print(tile.ttype, tile.value)
