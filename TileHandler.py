@@ -106,7 +106,7 @@ def display_tiles(tiles:tile_set):
         try: # try print as if it was a normal tile
             print(tile.suit, tile.value)
         except:
-            if tile.ttype.upper() != "FLOWER" and tile.ttype.upper() != "ANIMAL":
+            if tile.ttype.upper() != "FLOWER" or tile.ttype.upper() != "ANIMAL":
                 print(tile.ttype)
             else:
                 print(tile.ttype, tile.value, tile.color)
