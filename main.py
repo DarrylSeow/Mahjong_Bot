@@ -7,6 +7,7 @@
 
 import customtkinter
 import sys
+import GameHandler
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
@@ -30,6 +31,8 @@ frame.grid_columnconfigure(2, weight=1)
 
 def runGame():
     print("test") # run the game here
+    GameHandler.run() # the game loop has to run inside here
+    # game handler should just tell this outside whileoop what happens every turn step
     pass
 playbutton = customtkinter.CTkButton(master = frame, text = 'START GAME', command = runGame, font=("Times New Roman", 24))
 playbutton.grid(column = 1, row = 2, ipady = 10)
