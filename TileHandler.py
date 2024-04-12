@@ -10,6 +10,7 @@ class tile:
     def __init__(self, suit:str, value:int):
         self.suit = suit
         self.value = value
+        self.ttype = "normal"
 
 # for wind, dragon, flowers, animals (ttype)
 # value is only used to specify flower tiles
@@ -67,7 +68,49 @@ class tile_set:
             self.tile_list.append(tile_obj)
         else:
             print("Only tiles can be added to tile sets!")
-            
+    def sort_tiles(self, key = "suit"): # sort the tiles in ascending order
+        # self.tile_list = sorted(self.tile_list, key=lambda x: x.ttype)
+        # split between normal and special tiles
+        normals = []
+        specials = []
+        for t in self.tile_list:
+            if t.ttype == "normal":
+                normals.append(t)
+            else:
+                specials.append(t)
+        # sort the special tiles by ttype
+        specials = sorted(specials, key=lambda x: x.ttype)
+        
+        # sort the normal tiles by the wanted key
+        if key == "suit":
+            normals = sorted(normals, key=lambda x: x.suit)
+        elif key == "value":
+            normals = sorted(normals, key=lambda x: x.value)
+        elif key == "both":
+            # first sort by suit
+            normals = sorted(normals, key=lambda x: x.suit)
+            # then split into sub lists for each suit
+            wan = []
+            suo = []
+            tong = []
+            for t in normals:
+                if t.suit == "wan":
+                    wan.append(t)
+                elif t.suit == "tong":
+                    tong.append(t)
+                elif t.suit == "suo":
+                    suo.append(t)
+            # sort each sublist according to value
+            suo = sorted(suo, key=lambda x: x.value)
+            wan = sorted(wan, key=lambda x: x.value)
+            tong = sorted(tong, key=lambda x: x.value)
+            # rejoin the sublists in alphabetical order
+            normals = suo + tong + wan
+        else:
+            print(f"'{key}' is not recognized as a valid sorting method!")
+            return
+        # join the two sorted lists
+        self.tile_list = normals + specials
 
 # generate a full set of mahjong tiles and store it in a "tile_set" object
 def generate_tiles() -> tile_set:
@@ -126,6 +169,10 @@ if __name__ == "__main__":
     print ("########################")
     
     testhand = tile_set(test.multidraw(13)) # because we shuffle before drawing, testhand should be random
+    display_tiles(testhand)
+    print ("########################")
+    
+    testhand.sort_tiles("both")
     display_tiles(testhand)
     print ("########################")
     
